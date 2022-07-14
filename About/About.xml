@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
   <name>Squad UI Tweaks (Continued)</name>
   <packageId>Mlie.SquadUITweaks</packageId>
@@ -32,6 +32,10 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=1455382219
         [td][url=https://invite.gg/Mlie][img]https://i.imgur.com/zdzzBrc.png[/img][/url][/td]
         [td][url=https://github.com/emipa606/SquadUITweaks][img]https://i.imgur.com/kTkpTOE.png[/img][/url][/td]
     [/tr]
+    [tr]
+        [td][img]https://i.imgur.com/WjDSfUn.png[/img][/td]
+        [td][img]https://i.imgur.com/h5VwTNL.png[/img][/td]
+    [/tr]
 [/table]
 	
 [img]https://i.imgur.com/Z4GOv8H.png[/img]
@@ -43,10 +47,10 @@ A few minor tweaks to the UI when selecting groups:
 All of the code is basically vanilla Rimworld, I just linked various bits up.
 
 
-[b]Powered by Harmony[b]
+[b]Powered by Harmony[/b]
 
 
-[b]Credits[b]
+[b]Credits[/b]
 [list]
     [*]pardeike for the Harmony patching library
     [*]marnador for the Rimworld font
@@ -66,4 +70,3 @@ All of the code is basically vanilla Rimworld, I just linked various bits up.
 [/list]
 </description>
 </ModMetaData>
-
