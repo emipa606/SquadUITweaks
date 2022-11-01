@@ -4,66 +4,65 @@ using HarmonyLib;
 using UnityEngine;
 using Verse;
 
-namespace SquadUITweaks
+namespace SquadUITweaks;
+
+public class Command_Target_Extended : Command_Target
 {
-    public class Command_Target_Extended : Command_Target
+    private static Traverse traverseOfFirstGizmos;
+
+    public static readonly List<Command_VerbTarget> CurrentTargetGizmos = new List<Command_VerbTarget>();
+
+    public Command_Target_Extended(Command_Target original)
     {
-        private static Traverse traverseOfFirstGizmos;
+        defaultLabel = original.defaultLabel;
+        defaultDesc = original.defaultDesc;
+        targetingParams = original.targetingParams;
+        hotKey = original.hotKey;
+        icon = original.icon;
+        action = original.action;
+        disabled = original.disabled;
+        disabledReason = original.disabledReason;
+    }
 
-        public static readonly List<Command_VerbTarget> CurrentTargetGizmos = new List<Command_VerbTarget>();
-
-        public Command_Target_Extended(Command_Target original)
+    public static Traverse TraverseOffirstGizmos
+    {
+        get
         {
-            defaultLabel = original.defaultLabel;
-            defaultDesc = original.defaultDesc;
-            targetingParams = original.targetingParams;
-            hotKey = original.hotKey;
-            icon = original.icon;
-            action = original.action;
-            disabled = original.disabled;
-            disabledReason = original.disabledReason;
+            if (traverseOfFirstGizmos == null)
+            {
+                traverseOfFirstGizmos = Traverse.Create(typeof(GizmoGridDrawer)).Field("firstGizmos");
+            }
+
+            return traverseOfFirstGizmos;
+        }
+    }
+
+    public override GizmoResult GizmoOnGUI(
+        Vector2 topLeft,
+        float maxWidth, GizmoRenderParms parms)
+    {
+        CurrentTargetGizmos.Clear();
+        foreach (var command in TraverseOffirstGizmos
+                     .GetValue<List<Gizmo>>()
+                     .Where(gizmo => gizmo is Command_VerbTarget)
+                     .Cast<Command_VerbTarget>())
+        {
+            CurrentTargetGizmos.Add(command);
         }
 
-        public static Traverse TraverseOffirstGizmos
-        {
-            get
-            {
-                if (traverseOfFirstGizmos == null)
-                {
-                    traverseOfFirstGizmos = Traverse.Create(typeof(GizmoGridDrawer)).Field("firstGizmos");
-                }
+        return base.GizmoOnGUI(topLeft, maxWidth, parms);
+    }
 
-                return traverseOfFirstGizmos;
-            }
+    public override void GizmoUpdateOnMouseover()
+    {
+        if (CurrentTargetGizmos == null || CurrentTargetGizmos.Count == 0)
+        {
+            return;
         }
 
-        public override GizmoResult GizmoOnGUI(
-            Vector2 topLeft,
-            float maxWidth, GizmoRenderParms parms)
+        foreach (var verbCommand in CurrentTargetGizmos)
         {
-            CurrentTargetGizmos.Clear();
-            foreach (var command in TraverseOffirstGizmos
-                .GetValue<List<Gizmo>>()
-                .Where(gizmo => gizmo is Command_VerbTarget)
-                .Cast<Command_VerbTarget>())
-            {
-                CurrentTargetGizmos.Add(command);
-            }
-
-            return base.GizmoOnGUI(topLeft, maxWidth, parms);
-        }
-
-        public override void GizmoUpdateOnMouseover()
-        {
-            if (CurrentTargetGizmos == null || CurrentTargetGizmos.Count == 0)
-            {
-                return;
-            }
-
-            foreach (var verbCommand in CurrentTargetGizmos)
-            {
-                verbCommand?.GizmoUpdateOnMouseover();
-            }
+            verbCommand?.GizmoUpdateOnMouseover();
         }
     }
 }
