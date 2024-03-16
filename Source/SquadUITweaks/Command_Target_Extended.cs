@@ -10,7 +10,7 @@ public class Command_Target_Extended : Command_Target
 {
     private static Traverse traverseOfFirstGizmos;
 
-    public static readonly List<Command_VerbTarget> CurrentTargetGizmos = new List<Command_VerbTarget>();
+    public static readonly List<Command_VerbTarget> CurrentTargetGizmos = [];
 
     public Command_Target_Extended(Command_Target original)
     {
@@ -20,7 +20,7 @@ public class Command_Target_Extended : Command_Target
         hotKey = original.hotKey;
         icon = original.icon;
         action = original.action;
-        disabled = original.disabled;
+        disabled = original.Disabled;
         disabledReason = original.disabledReason;
     }
 
