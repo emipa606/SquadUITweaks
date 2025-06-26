@@ -11,17 +11,17 @@ public class HarmonyPatches
     {
         var harmony = new Harmony("drumad.rimworld.mod.squadUItweaks");
 
-        var thistype = typeof(HarmonyPatches);
+        var type = typeof(HarmonyPatches);
 
         harmony.Patch(
             AccessTools.Method(typeof(PawnAttackGizmoUtility),
                 nameof(PawnAttackGizmoUtility.CanShowEquipmentGizmos)), null,
-            new HarmonyMethod(thistype, nameof(CanShowEquipmentGizmos_postfix)));
+            new HarmonyMethod(type, nameof(CanShowEquipmentGizmos_postfix)));
         harmony.Patch(AccessTools.Method(typeof(PawnAttackGizmoUtility), "ShouldUseSquadAttackGizmo"),
-            new HarmonyMethod(thistype, nameof(ShouldUseSquadAttackGizmo_Postfix)));
+            new HarmonyMethod(type, nameof(ShouldUseSquadAttackGizmo_Postfix)));
         harmony.Patch(
             AccessTools.Method(typeof(PawnAttackGizmoUtility),
-                "GetSquadAttackGizmo"), null, new HarmonyMethod(thistype,
+                "GetSquadAttackGizmo"), null, new HarmonyMethod(type,
                 nameof(GetSquadAttackGizmo_Postfix)));
     }
 

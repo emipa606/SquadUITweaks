@@ -10,7 +10,7 @@ public class Command_Target_Extended : Command_Target
 {
     private static Traverse traverseOfFirstGizmos;
 
-    public static readonly List<Command_VerbTarget> CurrentTargetGizmos = [];
+    private static readonly List<Command_VerbTarget> CurrentTargetGizmos = [];
 
     public Command_Target_Extended(Command_Target original)
     {
@@ -24,14 +24,11 @@ public class Command_Target_Extended : Command_Target
         disabledReason = original.disabledReason;
     }
 
-    public static Traverse TraverseOffirstGizmos
+    private static Traverse TraverseOffirstGizmos
     {
         get
         {
-            if (traverseOfFirstGizmos == null)
-            {
-                traverseOfFirstGizmos = Traverse.Create(typeof(GizmoGridDrawer)).Field("firstGizmos");
-            }
+            traverseOfFirstGizmos ??= Traverse.Create(typeof(GizmoGridDrawer)).Field("firstGizmos");
 
             return traverseOfFirstGizmos;
         }
