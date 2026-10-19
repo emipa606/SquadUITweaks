@@ -5,7 +5,7 @@ using Verse;
 namespace SquadUITweaks;
 
 [StaticConstructorOnStartup]
-public class HarmonyPatches
+public static class HarmonyPatches
 {
     static HarmonyPatches()
     {
@@ -25,11 +25,9 @@ public class HarmonyPatches
                 nameof(GetSquadAttackGizmo_Postfix)));
     }
 
-    //[TweakValue("UIImprovements", 0, 1)]
-    //public static float CanShowEquipment_retVal_0isFalse = 1f;
     public static void CanShowEquipmentGizmos_postfix(ref bool __result)
     {
-        __result = /*CanShowEquipment_retVal_0isFalse > 0.5f*/ true;
+        __result = true;
     }
 
     public static void ShouldUseSquadAttackGizmo_Postfix(ref bool __result)
@@ -44,7 +42,6 @@ public class HarmonyPatches
     }
 
 
-    //TODO just wrapping this might be better?
     public static void GetSquadAttackGizmo_Postfix(
         ref Gizmo __result)
     {

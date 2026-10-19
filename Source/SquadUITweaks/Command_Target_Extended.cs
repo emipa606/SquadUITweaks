@@ -8,8 +8,6 @@ namespace SquadUITweaks;
 
 public class Command_Target_Extended : Command_Target
 {
-    private static Traverse traverseOfFirstGizmos;
-
     private static readonly List<Command_VerbTarget> CurrentTargetGizmos = [];
 
     public Command_Target_Extended(Command_Target original)
@@ -28,9 +26,9 @@ public class Command_Target_Extended : Command_Target
     {
         get
         {
-            traverseOfFirstGizmos ??= Traverse.Create(typeof(GizmoGridDrawer)).Field("firstGizmos");
+            field ??= Traverse.Create(typeof(GizmoGridDrawer)).Field("firstGizmos");
 
-            return traverseOfFirstGizmos;
+            return field;
         }
     }
 
@@ -40,9 +38,7 @@ public class Command_Target_Extended : Command_Target
     {
         CurrentTargetGizmos.Clear();
         foreach (var command in TraverseOffirstGizmos
-                     .GetValue<List<Gizmo>>()
-                     .Where(gizmo => gizmo is Command_VerbTarget)
-                     .Cast<Command_VerbTarget>())
+                     .GetValue<List<Gizmo>>().OfType<Command_VerbTarget>())
         {
             CurrentTargetGizmos.Add(command);
         }
